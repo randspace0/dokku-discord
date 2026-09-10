@@ -13,6 +13,7 @@ cd "$PLUGIN_DIR"
 # Make all scripts executable
 chmod +x commands
 chmod +x post-deploy
+chmod +x pre-release-builder
 chmod +x subcommands/*
 
 echo "-----> dokku-discord plugin installed successfully!"

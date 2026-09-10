@@ -5,7 +5,7 @@ source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
 trigger_discord_pre_deploy() {
   declare desc="Send Discord notification before deployment"
-  declare trigger="pre-deploy"
+  declare trigger="pre-release-builder"
   declare APP="$1"
   local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
 
@@ -18,7 +18,7 @@ trigger_discord_pre_deploy() {
     WEBHOOK_URL=$(cat "$APP_CONFIG")
   elif [[ -f "$GLOBAL_CONFIG" ]]; then
     # Check if app has DISCORD_NOTIFY env var set
-    local SHOULD_NOTIFY=$(config_get "$APP" DISCORD_NOTIFY || echo "")
+    local SHOULD_NOTIFY=$(dokku config:get "$APP" DISCORD_NOTIFY 2>/dev/null || echo "")
     if [[ "$SHOULD_NOTIFY" == "1" ]] || [[ -z "$SHOULD_NOTIFY" ]]; then
       WEBHOOK_URL=$(cat "$GLOBAL_CONFIG")
     fi
